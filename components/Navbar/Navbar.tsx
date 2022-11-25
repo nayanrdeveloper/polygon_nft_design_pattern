@@ -5,9 +5,10 @@ import Onboard from "@web3-onboard/core";
 import injectedModule from "@web3-onboard/injected-wallets";
 import { ethers } from "ethers";
 // import walletConnect from "../../walletConnect";
-const injected = injectedModule();
+
 
 function Navbar() {
+const injected = injectedModule();
   const onboard = Onboard({
     wallets: [injected],
     chains: [
