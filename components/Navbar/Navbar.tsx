@@ -8,32 +8,32 @@ import { ethers } from "ethers";
 
 
 function Navbar() {
-const injected = injectedModule();
-  const onboard = Onboard({
-    wallets: [injected],
-    chains: [
-      {
-        id: "0x13881",
-        token: "MATIC",
-        label: "Mumbai Polygon",
-        rpcUrl: process.env.NEXT_PUBLIC_API_KEY || "",
-      },
-    ],
-    appMetadata: {
-      name: "ColorSpy",
-      icon: "/logo-no-background.ico",
-      logo: "/logo-color.png",
-      description: "ColorSpy Wallet Network",
-      agreement: {
-        version: "1.0.0",
-        termsUrl: "https://www.google.com",
-        privacyUrl: "https://www.yahoo.com",
-      },
-      recommendedInjectedWallets: [
-        { name: "Coinbase", url: "https://wallet.coinbase.com/" },
-        { name: "MetaMask", url: "https://metamask.io" },
-      ],
-    },
+// const injected = injectedModule();
+//   const onboard = Onboard({
+//     wallets: [injected],
+//     chains: [
+//       {
+//         id: "0x13881",
+//         token: "MATIC",
+//         label: "Mumbai Polygon",
+//         rpcUrl: process.env.NEXT_PUBLIC_API_KEY || "",
+//       },
+//     ],
+//     appMetadata: {
+//       name: "ColorSpy",
+//       icon: "/logo-no-background.ico",
+//       logo: "/logo-color.png",
+//       description: "ColorSpy Wallet Network",
+//       agreement: {
+//         version: "1.0.0",
+//         termsUrl: "https://www.google.com",
+//         privacyUrl: "https://www.yahoo.com",
+//       },
+//       recommendedInjectedWallets: [
+//         { name: "Coinbase", url: "https://wallet.coinbase.com/" },
+//         { name: "MetaMask", url: "https://metamask.io" },
+//       ],
+//     },
     // i18n: {
     //   en: {
     //     connect: {
@@ -56,16 +56,16 @@ const injected = injectedModule();
     //           },
     //   },
     // },
-  });
+//   });
   const onConnectWallet = async () => {
     // walletConnect.connectWallet();
-    const wallets = await onboard.connectWallet();
-    const ethersProvider = new ethers.providers.Web3Provider(
-      wallets[0].provider,
-      "any"
-    );
-    const providerSigner = ethersProvider.getSigner();
-    const signer = providerSigner;
+    // const wallets = await onboard.connectWallet();
+    // const ethersProvider = new ethers.providers.Web3Provider(
+    //   wallets[0].provider,
+    //   "any"
+    // );
+    // const providerSigner = ethersProvider.getSigner();
+    // const signer = providerSigner;
   };
   const navItems = [
     {
