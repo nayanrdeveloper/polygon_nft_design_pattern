@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import NavLogo from "./NavLogo";
+
 import Link from "next/link";
-import Onboard from "@web3-onboard/core";
-import injectedModule from "@web3-onboard/injected-wallets";
+
 import { ethers } from "ethers";
 import { ToastContainer, toast } from "react-toastify";
+import shortAddress from "../../utils/shortaddress";
 
 declare var window: any;
 
@@ -60,6 +60,7 @@ function Navbar() {
   ];
   return (
     <nav className="flex justify-between py-3 border-b border-[#ffffff14] backdrop-blur-[9px] p-5">
+      <ToastContainer theme="dark" />
       <ul className="flex my-auto ml-7">
         {navItems.map((item) => {
           return (
@@ -76,7 +77,7 @@ function Navbar() {
       <div className="my-auto flex">
         {address ? (
           <div className="bg-[#212e48] py-2 px-2 rounded-xl text-white hover:bg-[#00a3ff]">
-            {address}
+            {shortAddress(address)}
           </div>
         ) : (
           <button

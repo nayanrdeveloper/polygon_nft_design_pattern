@@ -6,12 +6,16 @@ import axios from "axios";
 // import connectWallet from "../../walletConnect";
 import tokenAbi from "../../contractData/myToken";
 import marketplaceAbi from "../../contractData/marketplaceAbi";
+import { RotatingLines } from "react-loader-spinner";
+// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 declare var window: any;
 
 function MyNFTList() {
   const [NFTData, setNFTData] = useState<any>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const getItems = async () => {
+    setIsLoading(true);
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = await provider.getSigner();
     try {
@@ -51,8 +55,10 @@ function MyNFTList() {
         })
       );
       setNFTData(newItems);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -70,10 +76,15 @@ function MyNFTList() {
                 return <NFTCard key={NFTCardData.tokenId} {...NFTCardData} />;
               })
             ) : (
-              <span className="flex justify-center my-auto">
-                {" "}
-                <Loader />{" "}
-              </span>
+              <div className="flex justify-center my-auto">
+                <RotatingLines
+                  strokeColor="grey"
+                  strokeWidth="5"
+                  animationDuration="0.75"
+                  width="96"
+                  visible={true}
+                />
+              </div>
             )}
           </div>
         </div>

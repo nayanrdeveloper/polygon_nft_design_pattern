@@ -7,6 +7,7 @@ import tokenAbi from "../../contractData/myToken";
 import marketplaceAbi from "../../contractData/marketplaceAbi";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
+import { RotatingLines } from "react-loader-spinner";
 
 declare var window: any;
 
@@ -14,6 +15,7 @@ function NFTDetails() {
   const router = useRouter();
   const { tokenId } = router.query;
   const [NFTData, setNFTData] = useState<any>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (tokenId) {
@@ -22,6 +24,7 @@ function NFTDetails() {
   }, [tokenId]);
 
   const getNFTData = async () => {
+    setIsLoading(true);
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = await provider.getSigner();
     let marketplaceContact = new ethers.Contract(
@@ -35,11 +38,11 @@ function NFTDetails() {
       signer
     );
     console.log(marketplaceContact);
-    
+
     const data = await marketplaceContact.getListedTokenByTokenId(tokenId);
     console.log(data);
     const tokenURI = await tokenContract.tokenURI(`${tokenId}`);
-    let meta :any = await axios.get(tokenURI);
+    let meta: any = await axios.get(tokenURI);
     meta = meta.data;
     // console.log(meta);
     // const price =await ethers.utils.formatUnits(meta.price.toString(), "ether");
@@ -53,9 +56,10 @@ function NFTDetails() {
       image: imageUrl,
       name: meta.name,
       description: meta.description,
-    }
+    };
     setNFTData(item);
-    console.log(item);  
+    console.log(item);
+    setIsLoading(false);
   };
 
   const butNFT = async () => {
@@ -66,20 +70,18 @@ function NFTDetails() {
       marketplaceAbi,
       signer
     );
-    const price = await ethers.utils.parseUnits(NFTData.price.toString(), "ether");
-    const transaction = await marketplaceNFT.executeSale(process.env.NEXT_PUBLIC_NFTTOKN_CONTRACT_ADDRESS,NFTData.itemId, {
-      value: price,
-    });
+    const price = await ethers.utils.parseUnits(
+      NFTData.price.toString(),
+      "ether"
+    );
+    const transaction = await marketplaceNFT.executeSale(
+      process.env.NEXT_PUBLIC_NFTTOKN_CONTRACT_ADDRESS,
+      NFTData.itemId,
+      {
+        value: price,
+      }
+    );
     await transaction.wait();
-    // toast.error("All Fields are required!!!", {
-    //   position: "top-right",
-    //   autoClose: 3000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    // });
   };
 
   return (
@@ -120,8 +122,13 @@ function NFTDetails() {
           </div>
         ) : (
           <span className="flex justify-center my-auto">
-            {" "}
-            <Loader />{" "}
+            <RotatingLines
+              strokeColor="grey"
+              strokeWidth="5"
+              animationDuration="0.75"
+              width="96"
+              visible={true}
+            />
           </span>
         )}
       </div>
