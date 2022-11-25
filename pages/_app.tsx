@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Navbar from "../components/Navbar/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
-// import Footer from "../components/Footer/Footer";
+import Footer from "../components/Footer/Footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <div className="relative md:ml-60">
         <Navbar />
         <Component {...pageProps} />
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </div>
   );
