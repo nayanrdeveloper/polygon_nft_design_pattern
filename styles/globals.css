@@ -5,3 +5,9 @@
 body {
     background-color: #13131d;
   }
+
+  @layer components {
+    .input-border {
+      @apply h-8 w-28 bg-[#242435] border-2 border-[#ffffff14] text-white rounded-md focus:border focus:border-[#00a3ff];
+    }
+  }
