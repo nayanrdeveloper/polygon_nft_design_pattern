@@ -4,16 +4,41 @@ import Link from "next/link";
 import Onboard from "@web3-onboard/core";
 import injectedModule from "@web3-onboard/injected-wallets";
 import { ethers } from "ethers";
+import { ToastContainer, toast } from "react-toastify";
 
 declare var window: any;
 
 function Navbar() {
   const [address, setAddress] = useState<string>("");
-
+  const networks = {
+    mumbai: {
+      chainId: `0x13881`,
+      chainName: "Polygon Testnet Mumbai",
+      nativeCurrency: {
+        name: "MATIC Token",
+        symbol: "MATIC",
+        decimals: 18,
+      },
+      rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+      blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+    },
+  };
   const onConnectWallet = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const address = await provider.send("eth_requestAccounts", []);
-    setAddress(address[0]);
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const address = await provider.send("eth_requestAccounts", []);
+      setAddress(address[0]);
+      const chainId = await provider.getNetwork();
+      console.log(chainId);
+      if (chainId.name !== "ropsten") {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0x13881" }],
+        });
+      }
+    } catch (error: any) {
+      toast(error.message);
+    }
   };
   const navItems = [
     {
@@ -50,7 +75,9 @@ function Navbar() {
       </ul>
       <div className="my-auto flex">
         {address ? (
-          <div className="bg-[#212e48] py-2 px-2 rounded-xl text-white hover:bg-[#00a3ff]">{address}</div>
+          <div className="bg-[#212e48] py-2 px-2 rounded-xl text-white hover:bg-[#00a3ff]">
+            {address}
+          </div>
         ) : (
           <button
             onClick={onConnectWallet}
