@@ -1,12 +1,12 @@
 import React from "react";
 import NavLogo from "./NavLogo";
 import Link from "next/link";
-import walletConnect from "../../walletConnect";
+// import walletConnect from "../../walletConnect";
 
 
 function Navbar() {
     const onConnectWallet = () => {
-        walletConnect.connectWallet();
+        // walletConnect.connectWallet();
       };
   const navItems = [
     {
