@@ -11,8 +11,6 @@ function Navbar() {
   const [address, setAddress] = useState<string>("");
 
   const onConnectWallet = async () => {
-    console.log("Connect wallet");
-
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const address = await provider.send("eth_requestAccounts", []);
     setAddress(address[0]);

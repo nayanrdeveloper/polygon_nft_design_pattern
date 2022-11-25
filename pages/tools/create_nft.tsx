@@ -1,10 +1,10 @@
 import React from 'react'
-// import CreateNFT from '../../components/CreateNFT/CreateNFT'
+import CreateNFT from '../../components/CreateNFT/CreateNFT'
 
 function create_nft() {
   return (
     <div>
-        {/* <CreateNFT /> */}
+        <CreateNFT />
     </div>
   )
 }
